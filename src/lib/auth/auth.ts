@@ -59,9 +59,12 @@ type TypedLoginResponse = SuccessLoginResponse | ErrorLoginResponse;
  * Attempts to log in a user with the provided credentials
  */
 export async function login(credentials: LoginCredentials, api: string, token: string): Promise<TypedLoginResponse> {
-	if (PUBLIC_MOCK_API) {
+	if (PUBLIC_MOCK_API === 'true') {
+		console.warn('Notice: using the mock API');
 		await new Promise((resolve) => setTimeout(resolve, 2000));
-		const mockUser = TEST_USERS.find(user => user.username === credentials.username && user.password === credentials.password);
+		const mockUser = TEST_USERS.find(
+			(user) => user.username === credentials.username && user.password === credentials.password
+		);
 		if (mockUser) {
 			const successResponse: SuccessLoginResponse = {
 				success: true,
